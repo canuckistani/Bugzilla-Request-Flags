@@ -10,7 +10,7 @@ const DEFAULT_TIMER = (60 * 1000); // every minute
 const email = 'jgriffiths@mozilla.com';
 
 let button = ActionButton({
-  id: 'my-button',
+  id: 'bz-queue-button',
   label: 'Request Flags',
   icon: './bugzilla.png',
   onClick: () => {
