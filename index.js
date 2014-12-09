@@ -36,7 +36,12 @@ function handleResponse(response) {
     throw "Response did not return JSON??";
   }
   if (response.json.bugs) {
-    button.badge = response.json.bugs.length;
+    let length = response.json.bugs.length;
+    if (length === 0) {
+      //
+      button.badgeColor = 'green';
+    }
+    button.badge = length;
   }
 }
 
