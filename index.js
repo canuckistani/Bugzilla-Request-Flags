@@ -3,10 +3,10 @@ let { Request } = require('sdk/request');
 let { ActionButton } = require('sdk/ui/button/action');
 // let panels = require("sdk/panel");
 let self = require("sdk/self");
-let { setTimeout, clearTimeout } = require('sdk/timers');
+let { setInterval, clearInterval } = require('sdk/timers');
 let tabs = require('sdk/tabs');
 
-const DEFAULT_TIMER = (60 * 1000); // every minute
+const DEFAULT_TIMER = (5 * 1000); // every minute
 const email = 'jgriffiths@mozilla.com';
 
 let button = ActionButton({
@@ -43,9 +43,9 @@ function handleResponse(response) {
   }
 }
 
-// let loop = setTimeout(() => {
-//   fetchQueue(email)
-// }, DEFAULT_TIMER);
+let loop = setInterval(() => {
+  fetchQueue(email, handleResponse);
+}, DEFAULT_TIMER);
 
 exports.main = () => {
   fetchQueue(email, handleResponse);
