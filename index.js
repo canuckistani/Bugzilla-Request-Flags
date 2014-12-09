@@ -15,9 +15,6 @@ let button = ActionButton({
   icon: './bugzilla.png',
   onClick: () => {
     tabs.open('https://bugzilla.mozilla.org/request.cgi?action=queue&requestee='+ email +'&group=type');
-    // fetchQueue(email, (response) => {
-    //   console.log(response);
-    // });
   }
 });
 
