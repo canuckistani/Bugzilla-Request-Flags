@@ -1,0 +1,18 @@
+{
+  "title": "Bz Todo",
+  "name": "bztodo",
+  "version": "0.0.1",
+  "icon": "data/bugzilla.png",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "engines": {
+    "firefox": ">=33.0a1",
+    "fennec": ">=33.0a1"
+  },
+  "license": "MIT",
+  "dependencies": {},
+  "permissions": {
+    "cross-domain-content": [ "https://bugzilla.mozilla.org/" ]
+  }
+}
