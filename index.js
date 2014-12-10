@@ -1,7 +1,6 @@
 let self = require('sdk/self');
 let { Request } = require('sdk/request');
 let { ActionButton } = require('sdk/ui/button/action');
-// let panels = require("sdk/panel");
 let self = require("sdk/self");
 let { setInterval, clearInterval } = require('sdk/timers');
 let tabs = require('sdk/tabs');
