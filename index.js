@@ -4,9 +4,30 @@ let { ActionButton } = require('sdk/ui/button/action');
 let self = require("sdk/self");
 let { setInterval, clearInterval } = require('sdk/timers');
 let tabs = require('sdk/tabs');
+let sp = require('sdk/simple-prefs');
 
-const DEFAULT_TIMER = (5 * 1000); // every minute
-const email = 'jgriffiths@mozilla.com';
+const DEFAULT_FREQUENCY = 5;
+const DEFAULT_EMAIL = 'jgriffiths@mozilla.com';
+
+let email, updateFrequency;
+let _multiplier = sp.prefs.updateFrequency || DEFAULT_FREQUENCY;
+let updateFrequency = (_multiplier * 1000);
+
+sp.on('bugzillaEmail', () => {
+  console.log('changed', sp.prefs.bugzillaEmail);
+  email = sp.prefs.bugzillaEmail || DEFAULT_EMAIL;
+});
+
+sp.on('updateFrequency', () => {
+  console.log("changed", sp.prefs.updateFrequency);
+  let _multiplier = sp.prefs.updateFrequency || DEFAULT_FREQUENCY;
+  updateFrequency = (_multiplier * 1000);
+
+  clearInterval(loop);
+  loop = setInterval(() => {
+    fetchQueue(email, handleResponse);
+  }, updateFrequency);
+});
 
 let button = ActionButton({
   id: 'bz-queue-button',
@@ -46,6 +67,6 @@ function handleResponse(response) {
 
 let loop = setInterval(() => {
   fetchQueue(email, handleResponse);
-}, DEFAULT_TIMER);
+}, updateFrequency);
 
 fetchQueue(email, handleResponse);
