@@ -49,8 +49,4 @@ let loop = setInterval(() => {
   fetchQueue(email, handleResponse);
 }, DEFAULT_TIMER);
 
-exports.main = () => {
-  fetchQueue(email, handleResponse);
-}
-
 fetchQueue(email, handleResponse);
