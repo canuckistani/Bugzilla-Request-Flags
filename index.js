@@ -7,15 +7,18 @@ let tabs = require('sdk/tabs');
 let sp = require('sdk/simple-prefs');
 
 const DEFAULT_FREQUENCY = 5;
-const DEFAULT_EMAIL = 'jgriffiths@mozilla.com';
-
-let email, updateFrequency;
-let _multiplier = sp.prefs.updateFrequency || DEFAULT_FREQUENCY;
-let updateFrequency = (_multiplier * 1000);
+const DEFAULT_EMAIL = null;
+let loop, email = sp.prefs.bugzillaEmail;
 
 sp.on('bugzillaEmail', () => {
-  console.log('changed', sp.prefs.bugzillaEmail);
   email = sp.prefs.bugzillaEmail || DEFAULT_EMAIL;
+  if (!email) {
+    button.badge = '?';
+    button.label = 'You need to configure your bugzilla email in preferences.'
+  }
+  else {
+    button.label = ''
+  }
 });
 
 sp.on('updateFrequency', () => {
@@ -39,8 +42,9 @@ let button = ActionButton({
 });
 
 function fetchQueue(email, cb) {
-  console.log("fetching queue");
-  var uri = 'https://bugzilla.mozilla.org/bzapi/bug?field0-0-0=flag.requestee&type0-0-0=equals&value0-0-0='+email+'&include_fields=id%2Csummary%2Cstatus%2Cresolution%2Clast_change_time%2Cflags';
+  var uri = 'https://bugzilla.mozilla.org/bzapi/bug?field0-0-0=flag.requestee&type0-0-0=equals&value0-0-0='
+    +email
+    +'&include_fields=id%2Csummary%2Cstatus%2Cresolution%2Clast_change_time%2Cflags';
   Request({
     url: uri,
     contentType: 'application/json',
@@ -61,12 +65,33 @@ function handleResponse(response) {
       //
       button.badgeColor = 'green';
     }
+    else {
+      button.badgeColor = 'red';
+    }
     button.badge = length;
   }
 }
 
-let loop = setInterval(() => {
-  fetchQueue(email, handleResponse);
-}, updateFrequency);
+function getTimerFrequency(seconds) {
+  return (seconds * 1000);
+}
 
-fetchQueue(email, handleResponse);
+function main() {
+
+  let email = sp.prefs.bugzillaEmail, 
+      updateFrequency = getTimerFrequency(sp.prefs.updateFrequency);
+
+  if (!email) {
+    button.badge = '?';
+    // button.badgeColor = 'yellow';
+    button.label = 'You need to configure your bugzilla email in preferences.'
+  }
+  else {
+    loop = setInterval(() => {
+      fetchQueue(email, handleResponse);
+    }, updateFrequency);
+    fetchQueue(email, handleResponse);
+  }
+}
+
+exports.main = main;

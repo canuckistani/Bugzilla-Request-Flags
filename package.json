@@ -1,7 +1,7 @@
 {
   "title": "Bugzilla Request Flags",
   "name": "bztodo",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "icon": "data/bugzilla.png",
   "description": "",
   "main": "index.js",

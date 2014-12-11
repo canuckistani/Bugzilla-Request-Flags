@@ -8,3 +8,4 @@ TODO
 2. <del>implement a button with a badge on it</del>
 3. preferences for email and refresh frequency
 4. local UI for the request list?
+5. consider ways to work around polling
