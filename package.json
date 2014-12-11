@@ -22,7 +22,7 @@
     "type": "string"
   },
   {
-    "description": "How frequently the add-on checks for updates ( in minutes )",
+    "description": "How frequently the add-on checks for updates ( in seconds )",
     "name": "updateFrequency",
     "type": "integer",
     "value": 2,
