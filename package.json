@@ -11,21 +11,24 @@
     "fennec": ">=33.0a1"
   },
   "license": "MIT",
-  "dependencies": {},
   "permissions": {
-    "cross-domain-content": [ "https://bugzilla.mozilla.org/" ]
+    "cross-domain-content": [
+      "https://bugzilla.mozilla.org/"
+    ]
   },
-  "preferences": [{
-    "name": "bugzillaEmail",
-    "title": "Bugzilla Email",
-    "description": "The email associated with your bugzilla account.",
-    "type": "string"
-  },
-  {
-    "description": "How frequently the add-on checks for updates ( in seconds )",
-    "name": "updateFrequency",
-    "type": "integer",
-    "value": 2,
-    "title": "Update frequency"
-  }]
+  "preferences": [
+    {
+      "name": "bugzillaEmail",
+      "title": "Bugzilla Email",
+      "description": "The email associated with your bugzilla account.",
+      "type": "string"
+    },
+    {
+      "description": "How frequently the add-on checks for updates ( in seconds )",
+      "name": "updateFrequency",
+      "type": "integer",
+      "value": 2,
+      "title": "Update frequency"
+    }
+  ]
 }
