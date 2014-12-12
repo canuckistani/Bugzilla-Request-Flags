@@ -1,5 +1,6 @@
 let self = require('sdk/self');
-let { Request } = require('sdk/request');
+// let { Request } = require('sdk/request');
+let bz = require('./bz');
 let { ActionButton } = require('sdk/ui/button/action');
 let self = require("sdk/self");
 let { setInterval, clearInterval } = require('sdk/timers');
@@ -9,6 +10,8 @@ let sp = require('sdk/simple-prefs');
 const DEFAULT_FREQUENCY = 5;
 const DEFAULT_EMAIL = null;
 let loop, email = sp.prefs.bugzillaEmail;
+
+var bugzilla = bz.createClient();
 
 sp.on('bugzillaEmail', () => {
   email = sp.prefs.bugzillaEmail || DEFAULT_EMAIL;
@@ -42,25 +45,18 @@ let button = ActionButton({
 });
 
 function fetchQueue(email, cb) {
-  var uri = 'https://bugzilla.mozilla.org/bzapi/bug?field0-0-0=flag.requestee&type0-0-0=equals&value0-0-0='
-    +email
-    +'&include_fields=id%2Csummary%2Cstatus%2Cresolution%2Clast_change_time%2Cflags';
-  Request({
-    url: uri,
-    contentType: 'application/json',
-    headers: {Accept: 'application/json'},
-    onComplete: (response) => {
-      cb(response);
-    }
-  }).get();
+  bugzilla.searchBugs({
+    'field0-0-0':     'flag.requestee',
+    'type0-0-0':      'equals',
+    'value0-0-0':      email,
+    'include_fields': 'id%2Csummary%2Cstatus%2Cresolution%2Clast_change_time%2Cflags'
+  }, cb);
 }
 
-function handleResponse(response) {
-  if (!response.json) {
-    throw "Response did not return JSON??";
-  }
-  if (response.json.bugs) {
-    let length = response.json.bugs.length;
+function handleResponse(err, bugs) {
+  if (err) throw err;
+  if (bugs) {
+    let length = bugs.length;
     if (length === 0) {
       //
       button.badgeColor = 'green';
