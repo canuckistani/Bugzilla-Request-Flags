@@ -1,14 +1,13 @@
 {
   "title": "Bugzilla Request Flags",
   "name": "bztodo",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "icon": "data/bugzilla.png",
   "description": "",
   "main": "index.js",
-  "author": "",
+  "author": "Jeff Griffiths ( @canuckistani )",
   "engines": {
-    "firefox": ">=33.0a1",
-    "fennec": ">=33.0a1"
+    "firefox": ">=33.0a1"
   },
   "license": "MIT",
   "permissions": {

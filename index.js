@@ -1,13 +1,12 @@
 let self = require('sdk/self');
-// let { Request } = require('sdk/request');
 let bz = require('./bz');
 let { ActionButton } = require('sdk/ui/button/action');
-let self = require("sdk/self");
 let { setInterval, clearInterval } = require('sdk/timers');
 let tabs = require('sdk/tabs');
 let sp = require('sdk/simple-prefs');
 
 const DEFAULT_FREQUENCY = 5;
+
 const DEFAULT_EMAIL = null;
 let loop, email = sp.prefs.bugzillaEmail;
 
@@ -74,7 +73,7 @@ function getTimerFrequency(seconds) {
 
 function main() {
 
-  let email = sp.prefs.bugzillaEmail, 
+  let email = sp.prefs.bugzillaEmail,
       updateFrequency = getTimerFrequency(sp.prefs.updateFrequency);
 
   if (!email) {
