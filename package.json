@@ -11,9 +11,7 @@
   },
   "license": "MIT",
   "permissions": {
-    "cross-domain-content": [
-      "https://bugzilla.mozilla.org/"
-    ]
+    "multiprocess": true
   },
   "preferences": [
     {
